@@ -1,0 +1,228 @@
+Code 1:
+
+Objective: To identify and fix errors in a Python program that validates user input.
+
+def reverse_string(s):
+    reversed = ""
+    for i in range(len(s) - 1, -1, -1):
+        reversed += s[i]
+    return reversed
+
+def main():
+    input_string = "Hello, world!"
+    reversed_string = reverse_string(input_string)
+    print(f"Reversed string: {reversed_string}")
+
+if __name__ == "__main__":
+    main()
+
+Corrected version of code:
+
+
+def reverse_string(s):
+    return s[::-1]
+
+def main():
+    input_string = "Hello, world!"
+    reversed_string = reverse_string(input_string)
+    print(f"Reversed string: {reversed_string}")
+
+if __name__ == "__main__":
+    main()
+
+Explanation:
+
+1. The variable name 'reversed' should be avoided as it is a built-in function in Python. It is better to use a different name.
+2. Instead of using a loop to iterate through the string and concatenate characters, we can use string slicing for a more efficient and concise approach to reverse the string. 
+
+
+Code2:
+
+Objective: To identify and fix errors in a Python program that validates user input.
+
+def get_age():
+    age = input("Please enter your age: ")
+    if age.isnumeric() and age >= 18:
+        return int(age)
+    else:
+        return None
+
+def main():
+    age = get_age()
+    if age:
+        print(f"You are {age} years old and eligible.")
+    else:
+        print("Invalid input. You must be at least 18 years old.")
+
+if __name__ == "__main__":
+    main()
+
+Corrected version of code:
+
+def get_age():
+    age = input("Please enter your age: ")
+    if age.isnumeric():
+        age = int(age)  # Convert age to an integer
+        if age >= 18:
+            return age
+    return None
+
+def main():
+    age = get_age()
+    if age:
+        print(f"You are {age} years old and eligible.")
+    else:
+        print("Invalid input. You must be at least 18 years old.")
+
+if __name__ == "__main__":
+    main()
+
+Explanation:
+1.In the get_age function, you're comparing a string (age) with an integer (18), which will lead to a TypeError. we can fix that by converting 'age' to an integer before comparing it with 18.
+2. The condition age.isnumeric() should be checked before converting age to an integer. Otherwise, if age is not numeric, it will raise a ValueError when trying to convert it to an integer. we can fix that by checking if 'age' is numeric first, and if true, convert it to an integer and then compare the age.
+
+Code3:
+
+Objective: To identify and fix errors in a Python program that reads and writes to a file.
+
+def read_and_write_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            content = file.read()
+        with open(filename, 'w') as file:
+            file.write(content.upper())
+        print(f"File '{filename}' processed successfully.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+def main():
+    filename = "sample.txt"
+    read_and_write_file(filename)
+
+if __name__ == "__main__":
+    main()
+
+Corrected version of code:
+
+def read_and_write_file(filename):
+    try:
+        # Read the original content
+        with open(filename, 'r') as file:
+            original_content = file.read()
+
+        # Convert content to uppercase for writing
+        modified_content = original_content.upper()
+
+        # Write the modified content to the file
+        with open(filename, 'w') as file:
+            file.write(modified_content)
+
+        # Restore the original content to the file
+        with open(filename, 'w') as file:
+            file.write(original_content)
+
+        print(f"File '{filename}' processed successfully.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+def main():
+    filename = "sample.txt"
+    read_and_write_file(filename)
+
+if __name__ == "__main__":
+    main()
+
+Explanation:
+
+1.The code first opens the file in write mode ('w') and writes to it before reading its content. This will result in the file being emptied before its content is read, and the written content will be in uppercase. we can fix that by read the content from the file first, close the file, then open it in write mode and write the modified content.
+2. The program reads the content in lowercase and converts it to uppercase for writing. However, the requirement is to convert it to uppercase when writing and then restore it to the original case after reading. we can fix that by storing the original content before converting it to uppercase, and restore it after writing the uppercase content.
+
+Code4:
+
+Objective:The code aims to implement the merge sort algorithm. However, there is a bug in the code. When the student runs this code, it will raise an error or produce incorrect output. The student's task is to identify and correct the bug.
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = arr[:mid]
+    right = arr[mid:]
+    
+    merge_sort(left)
+    merge_sort(right)
+    
+    i = j = k = 0
+    
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            arr[k] = left[i]
+            i += 1
+        else:
+            arr[k] = right[j]
+            j += 1
+        k += 1
+    
+    while i < len(left):
+        arr[k] = left[i]
+        i += 1
+        k += 1
+    
+    while j < len(right):
+        arr[k] = right[j]
+        j += 1
+        k += 1
+
+arr = [38, 27, 43, 3, 9, 82, 10]
+merge_sort(arr)
+print(f"The sorted array is: {arr}")
+
+Corrected version:
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = arr[:mid]
+    right = arr[mid:]
+    
+    # Recursively sort the sub-arrays
+    merge_sort(left)
+    merge_sort(right)
+    
+    i = j = k = 0
+    
+    # Merge the sorted sub-arrays into the original array
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            arr[k] = left[i]
+            i += 1
+        else:
+            arr[k] = right[j]
+            j += 1
+        k += 1
+    
+    while i < len(left):
+        arr[k] = left[i]
+        i += 1
+        k += 1
+    
+    while j < len(right):
+        arr[k] = right[j]
+        j += 1
+        k += 1
+
+arr = [38, 27, 43, 3, 9, 82, 10]
+merge_sort(arr)
+print(f"The sorted array is: {arr}")
+
+Explanation: The issue in the provided code is related to how the merge_sort function is handling the sorted sub-arrays (left and right) during the merge step. The function is not correctly updating the original array arr with the sorted elements from the left and right sub-arrays.
+
+To fix this, we need to ensure that the sorted elements from the left and right sub-arrays are properly assigned back to the original array during the merge step.
+
+
+
+
+
+
